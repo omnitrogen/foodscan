@@ -25,26 +25,26 @@ while True:
 
         if resp.json()["status"] == 1:
             product = resp.json()["product"]["brands"]
+            cv2.putText(frame,
+                        decode[0].type + ", "
+                        + decode[0].data.decode() + ", "
+                        + product,
+                        (10, 40),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        1,
+                        (255, 255, 255),
+                        2)
+
+            cv2.putText(frame,
+                        resp.json()["product"]["product_name"],
+                        (10, 80),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        1,
+                        (255, 255, 255),
+                        2)
+
         elif resp.json()["status"] == 0:
-            product = "product not in db"
-
-        cv2.putText(frame,
-                    decode[0].type + ", "
-                    + decode[0].data.decode() + ", "
-                    + product,
-                    (10, 40),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    1,
-                    (255, 255, 255),
-                    2)
-
-        cv2.putText(frame,
-                    resp.json()["product"]["product_name"],
-                    (10, 80),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    1,
-                    (255, 255, 255),
-                    2)
+            print("product not in db")
 
         pprint(resp.json())
 
