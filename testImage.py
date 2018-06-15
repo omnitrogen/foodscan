@@ -4,16 +4,24 @@ from PIL import ImageTk
 import requests
 from io import BytesIO
 
+
 app = tk.Tk()
 
+frameMenu = tk.Frame(app)
+frameMenu.grid(row=0, column=0)
+framePres = tk.Frame(app)
+framePres.grid(row=0, column=1)
 # https://static.openfoodfacts.org/images/products/326/385/059/6513/front_fr.4.100.jpg
 imageUrl = requests.get("https://static.openfoodfacts.org/images/products/326/385/059/6513/front_fr.4.400.jpg")
 img = ImageTk.PhotoImage(Image.open(BytesIO(imageUrl.content)))
-panel = tk.Label(app, image=img)
+panel = tk.Label(framePres, image=img)
 panel.pack()
+imageUrl2 = requests.get("https://static.openfoodfacts.org/images/products/326/385/059/6513/ingredients_fr.9.200.jpg")
+img2 = ImageTk.PhotoImage(Image.open(BytesIO(imageUrl2.content)))
+panel2 = tk.Label(framePres, image=img2)
+panel2.pack()
 
-
-listebox = tk.Entry(app, width=100)
+listebox = tk.Listbox(frameMenu)
 listebox.pack()
 
 req = requests.get("https://fr.openfoodfacts.org/api/v0/produit/3263850596513.json")
