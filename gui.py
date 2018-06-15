@@ -12,7 +12,7 @@ import requests
 
 
 
-class PhotoBoothApp:
+class GuiApp:
     def __init__(self, vs):
         self.vs = vs
         self.frame = None
@@ -21,12 +21,14 @@ class PhotoBoothApp:
         self.root = tk.Tk()
         self.panel = None
 
+        self.listeProduits = []
+
         self.stopEvent = threading.Event()
         self.thread = threading.Thread(target=self.videoLoop, args=())
         self.thread.start()
 
         # set a callback to handle when the window is closed
-        self.root.wm_title("PhotoBooth")
+        self.root.wm_title("scan")
         self.root.wm_protocol("WM_DELETE_WINDOW", self.onClose)
 
     def videoLoop(self):
@@ -37,11 +39,14 @@ class PhotoBoothApp:
 
                 decode = pyzbar.decode(self.frame)
                 if decode != []:
-                    resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + decode[0].data.decode() + ".json")
-                    print(resp.json())
-                    texte = resp.json()["product"]["brands"] + resp.json()["product"]["product_name"]
-                    self.label = tk.Label(text=texte)
-                    self.label.pack()
+                    print("[INFO] Product detected")
+                    if decode[0].data.decode() not in liste:
+                        resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + decode[0].data.decode() + ".json")
+                        texte = resp.json()["product"]["brands"] + resp.json()["product"]["product_name"]
+                        self.label = tk.Label(text=texte)
+                        self.label.pack()
+                    else:
+                        print("[INFO] Product already in list.")
 
         except RuntimeError:
             print("[INFO] caught a RuntimeError")

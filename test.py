@@ -14,6 +14,8 @@ while True:
     decode = pyzbar.decode(frame)
     if decode != []:
 
+        print("object detected")
+
         for obj in decode:
             points = obj.polygon
             n = len(points)

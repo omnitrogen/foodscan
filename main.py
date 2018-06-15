@@ -1,4 +1,4 @@
-from photoboothapp import PhotoBoothApp
+from gui import GuiApp
 from imutils.video import VideoStream
 import argparse
 import time
@@ -7,6 +7,5 @@ import time
 print("[INFO] warming up camera...")
 vs = VideoStream(usePiCamera=False).start()
 
-# start the app
-pba = PhotoBoothApp(vs)
+pba = GuiApp(vs)
 pba.root.mainloop()
