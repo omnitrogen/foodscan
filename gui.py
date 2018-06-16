@@ -19,9 +19,9 @@ class GuiApp:
         self.stopEvent = None
         self.root = tk.Tk()
 
-        self.frameMenu = tk.Frame(app)
+        self.frameMenu = tk.Frame(self.root)
         self.frameMenu.grid(row=0, column=0)
-        self.framePres = tk.Frame(app)
+        self.framePres = tk.Frame(self.root)
         self.framePres.grid(row=0, column=1)
 
         self.listbox = tk.Listbox(self.frameMenu)
