@@ -77,9 +77,9 @@ class GuiApp:
         img = ImageTk.PhotoImage(Image.open(BytesIO(imageUrl.content)))
         presIcon = tk.Label(self.framePres, image=img)
         presIcon.grid_forget()
-        presBrand = tk.Label(self.framePres, text = req.json()["product"]["brands"])
+        presBrand = tk.Label(self.framePres, text = resp.json()["product"]["brands"])
         presBrand.grid_forget()
-        productName = req.json()["product"]["product_name"]
+        productName = resp.json()["product"]["product_name"]
         presProduct = tk.Label(self.framePres, text = productName)
         presProduct.grid_forget()
         self.listeWidgets.append([presIcon, presBrand, presProduct])
