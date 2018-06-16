@@ -5,12 +5,18 @@ import requests
 from io import BytesIO
 
 
+def add_item():
+    pass
+
 app = tk.Tk()
+
+listeItems = []
 
 frameMenu = tk.Frame(app)
 frameMenu.grid(row=0, column=0)
 framePres = tk.Frame(app)
 framePres.grid(row=0, column=1)
+
 # https://static.openfoodfacts.org/images/products/326/385/059/6513/front_fr.4.100.jpg
 imageUrl = requests.get("https://static.openfoodfacts.org/images/products/326/385/059/6513/front_fr.4.400.jpg")
 img = ImageTk.PhotoImage(Image.open(BytesIO(imageUrl.content)))
