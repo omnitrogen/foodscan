@@ -11,6 +11,7 @@ from pyzbar import pyzbar
 import requests
 from io import BytesIO
 
+
 class GuiApp:
     def __init__(self, vs):
         self.vs = vs
