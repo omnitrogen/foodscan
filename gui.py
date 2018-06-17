@@ -92,7 +92,7 @@ class GuiApp:
             presProduct = tk.Label(self.framePresRight, text = productName)
             presProduct.pack_forget()
             self.listeWidgets.append([presIcon, presBrand, presProduct])
-            self.listbox.insert(tk.END, str(self.listeProduct.__len__()) + " " + productName)
+            self.listbox.insert(tk.END, str(self.listeProduct.__len__() + 1) + " " + productName)
             self.listeProduct.append(data)
 
         except KeyError:
