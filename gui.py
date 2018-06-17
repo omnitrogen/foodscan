@@ -18,8 +18,10 @@ class GuiApp:
         self.thread = None
         self.stopEvent = None
         self.root = tk.Tk()
+        self.root.minsize(width= 800, height=500)
+        self.root.maxsize(width= 800, height=500)
 
-        self.frameGlobal = tk.Frame(self.root, width= 800, height=400)
+        self.frameGlobal = tk.Frame(self.root)
         self.frameGlobal.pack()
         self.frameMenu = tk.Frame(self.frameGlobal)
         self.frameMenu.grid(row=0, column=0)
