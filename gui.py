@@ -20,6 +20,7 @@ class GuiApp:
         self.root = tk.Tk()
 
         self.frameGlobal = tk.Frame(self.root, width= 800, height=400)
+        self.frameGlobal.pack()
         self.frameMenu = tk.Frame(self.frameGlobal)
         self.frameMenu.grid(row=0, column=0)
         self.framePres = tk.Frame(self.frameGlobal)
