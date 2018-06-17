@@ -79,17 +79,21 @@ class GuiApp:
         self.root.quit()
 
     def add_item(self, data):
-        self.listeProduct.append(data)
-        resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
-        imageUrl = requests.get(resp.json()["product"]["image_thumb_url"])
-        img = ImageTk.PhotoImage(Image.open(BytesIO(imageUrl.content)))
-        self.listePhoto.append(img)
-        presIcon = tk.Label(self.framePresLeft, image=img)
-        presIcon.pack_forget()
-        presBrand = tk.Label(self.framePresRight, text = resp.json()["product"]["brands"])
-        presBrand.pack_forget()
-        productName = resp.json()["product"]["product_name"]
-        presProduct = tk.Label(self.framePresRight, text = productName)
-        presProduct.pack_forget()
-        self.listeWidgets.append([presIcon, presBrand, presProduct])
-        self.listbox.insert(tk.END, str(self.listeProduct.__len__()) + " " + productName)
+        try:
+            resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
+            imageUrl = requests.get(resp.json()["product"]["image_thumb_url"])
+            img = ImageTk.PhotoImage(Image.open(BytesIO(imageUrl.content)))
+            self.listePhoto.append(img)
+            presIcon = tk.Label(self.framePresLeft, image=img)
+            presIcon.pack_forget()
+            presBrand = tk.Label(self.framePresRight, text = resp.json()["product"]["brands"])
+            presBrand.pack_forget()
+            productName = resp.json()["product"]["product_name"]
+            presProduct = tk.Label(self.framePresRight, text = productName)
+            presProduct.pack_forget()
+            self.listeWidgets.append([presIcon, presBrand, presProduct])
+            self.listbox.insert(tk.END, str(self.listeProduct.__len__()) + " " + productName)
+            self.listeProduct.append(data)
+
+        except KeyError:
+            print("[INFO] Error in product detection")
