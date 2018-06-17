@@ -18,7 +18,7 @@ class GuiApp:
         self.thread = None
         self.stopEvent = None
         self.root = tk.Tk()
-
+        self.root.resizable(width=False, height=False)
         self.frameGlobal = tk.Frame(self.root)
         self.frameGlobal.pack()
         self.frameMenu = tk.Frame(self.frameGlobal)
@@ -26,10 +26,8 @@ class GuiApp:
         self.framePres = tk.Frame(self.frameGlobal)
         self.framePres.grid(row=0, column=1)
         self.framePresLeft = tk.Frame(self.framePres, width=800, height=400)
-        self.framePresLeft.resizable(width=False, height=False)
         self.framePresLeft.grid(row=0, column=0)
         self.framePresRight = tk.Frame(self.framePres, width=800, height=400)
-        self.framePresRight.resizable(width=False, height=False)
         self.framePresRight.grid(row=0, column=1)
         self.listbox = tk.Listbox(self.frameMenu, width=50)
         self.listbox.pack()
@@ -38,7 +36,7 @@ class GuiApp:
         self.listeProduct = []
         self.listePhoto = []
         self.activeItem = str()
-        
+
         self.stopEvent = threading.Event()
         self.thread = threading.Thread(target=self.videoLoop, args=())
         self.thread.start()
