@@ -80,6 +80,7 @@ class GuiApp:
 
     def add_item(self, data):
         try:
+            self.listbox.insert(tk.END, "adding item...")
             resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
             imageUrl = requests.get(resp.json()["product"]["image_url"])
             img = Image.open(BytesIO(imageUrl.content))
@@ -94,6 +95,7 @@ class GuiApp:
             presProduct = tk.Label(self.framePresRight, text = productName)
             presProduct.pack_forget()
             self.listeWidgets.append([presIcon, presBrand, presProduct])
+            self.listbox.delete(tk.END)
             self.listbox.insert(tk.END, str(self.listeProduct.__len__() + 1) + " " + productName)
             self.listeProduct.append(data)
 
