@@ -19,13 +19,14 @@ class GuiApp:
         self.stopEvent = None
         self.root = tk.Tk()
 
-        self.frameMenu = tk.Frame(self.root)
+        self.frameGlobal = tk.Frame(self.root, width= 800, height=400)
+        self.frameMenu = tk.Frame(self.frameGlobal)
         self.frameMenu.grid(row=0, column=0)
-        self.framePres = tk.Frame(self.root)
+        self.framePres = tk.Frame(self.frameGlobal)
         self.framePres.grid(row=0, column=1)
-        self.framePresLeft = tk.Frame(self.framePres, width=400, height=400, background="#000fff000")
+        self.framePresLeft = tk.Frame(self.framePres)
         self.framePresLeft.grid(row=0, column=0)
-        self.framePresRight = tk.Frame(self.framePres, width=400, height=400, background="#00ffff")
+        self.framePresRight = tk.Frame(self.framePres)
         self.framePresRight.grid(row=0, column=1)
         self.listbox = tk.Listbox(self.frameMenu, width=50)
         self.listbox.pack()
