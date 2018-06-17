@@ -18,7 +18,6 @@ class GuiApp:
         self.thread = None
         self.stopEvent = None
         self.root = tk.Tk()
-        self.root.resizable(width=False, height=False)
         self.frameGlobal = tk.Frame(self.root)
         self.frameGlobal.pack()
         self.frameMenu = tk.Frame(self.frameGlobal)
@@ -82,7 +81,7 @@ class GuiApp:
     def add_item(self, data):
         self.listeProduct.append(data)
         resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
-        imageUrl = requests.get(resp.json()["product"]["image_url"])
+        imageUrl = requests.get(resp.json()["product"]["image_thumb_url"])
         img = ImageTk.PhotoImage(Image.open(BytesIO(imageUrl.content)))
         self.listePhoto.append(img)
         presIcon = tk.Label(self.framePresLeft, image=img)
