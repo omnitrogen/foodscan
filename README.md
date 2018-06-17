@@ -7,6 +7,6 @@ I'll be using several Python modules, such as opencv (for the camera), pyzbar (t
 This is just for fun! (as always) :rainbow:
 
 # TODO :
-- fix image size
-- fix widget position
-- add infos about the product
+- fix pulldown menu
+- add infos
+- create export to text method
