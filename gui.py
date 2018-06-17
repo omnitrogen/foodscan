@@ -6,7 +6,6 @@ import threading
 import datetime
 import imutils
 import cv2
-
 from pyzbar import pyzbar
 import requests
 from io import BytesIO
@@ -28,12 +27,13 @@ class GuiApp:
         self.framePresLeft.grid(row=0, column=0)
         self.framePresRight = tk.Frame(self.framePres)
         self.framePresRight.grid(row=0, column=1)
-        self.listbox = tk.Listbox(self.frameMenu)
+        self.listbox = tk.Listbox(self.frameMenu, width=50)
         self.listbox.pack()
 
         self.listeWidgets = []
         self.listeProduct = []
         self.listePhoto = []
+        self.activeItem = str()
 
         self.stopEvent = threading.Event()
         self.thread = threading.Thread(target=self.videoLoop, args=())
@@ -58,13 +58,16 @@ class GuiApp:
 
                 activeItem = self.listbox.get(tk.ACTIVE)
                 if activeItem != str():
-                    self.listeWidgets[int(activeItem[0]) - 1][0].pack()
-                    self.listeWidgets[int(activeItem[0]) - 1][1].pack()
-                    self.listeWidgets[int(activeItem[0]) - 1][2].pack()
-                    for elt in [i for i in self.listeWidgets if i != self.listeWidgets[int(activeItem[0]) - 1]]:
-                        elt[0].pack_forget()
-                        elt[1].pack_forget()
-                        elt[2].pack_forget()
+                    if activeItem != self.activeItem:
+                        self.listeWidgets[int(activeItem[0]) - 1][0].pack_propagate(0)
+                        self.listeWidgets[int(activeItem[0]) - 1][1].pack_propagate(0)
+                        self.listeWidgets[int(activeItem[0]) - 1][2].pack_propagate(0)
+                        for elt in [i for i in self.listeWidgets if i != self.listeWidgets[int(activeItem[0]) - 1]]:
+                            elt[0].pack_forget()
+                            elt[1].pack_forget()
+                            elt[2].pack_forget()
+                        self.activeItem = activeItem
+
         except RuntimeError:
             print("[INFO] caught a RuntimeError")
 
