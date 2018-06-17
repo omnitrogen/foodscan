@@ -81,8 +81,8 @@ class GuiApp:
     def add_item(self, data):
         try:
             resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
-            imageUrl = requests.get(resp.json()["product"]["image_thumb_url"])
-            img = ImageTk.PhotoImage(Image.open(BytesIO(imageUrl.content)))
+            imageUrl = requests.get(resp.json()["product"]["image_url"])
+            img = ImageTk.PhotoImage(Image.open(BytesIO(imageUrl.content)).thumbnail((300, 300), Image.ANTIALIAS))
             self.listePhoto.append(img)
             presIcon = tk.Label(self.framePresLeft, image=img)
             presIcon.pack_forget()
