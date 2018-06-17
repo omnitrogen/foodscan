@@ -18,6 +18,13 @@ class GuiApp:
         self.thread = None
         self.stopEvent = None
         self.root = tk.Tk()
+        self.menubar = tk.Menu(self.root)
+        self.filemenu = tk.Menu(self.menubar, tearoff=0)
+        self.filemenu.add_command(label="Infos")
+        self.filemenu.add_command(label="Export data as text", command=self.export)
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label="Exit", command=self.onClose)
+        self.root.config(menu=self.menubar)
         self.frameGlobal = tk.Frame(self.root)
         self.frameGlobal.pack()
         self.frameMenu = tk.Frame(self.frameGlobal)
@@ -80,7 +87,7 @@ class GuiApp:
 
     def add_item(self, data):
         try:
-            self.listbox.insert(tk.END, "adding item...")
+            self.listbox.insert(tk.END, "  Adding item...")
             resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
             imageUrl = requests.get(resp.json()["product"]["image_url"])
             img = Image.open(BytesIO(imageUrl.content))
@@ -101,3 +108,8 @@ class GuiApp:
 
         except KeyError:
             print("[INFO] Error in product detection")
+            if self.listbox.get(tk.END) == "  Adding item...":
+                self.listbox.delete(tk.END)
+
+    def export(self):
+        pass
