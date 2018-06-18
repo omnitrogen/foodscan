@@ -17,7 +17,7 @@ class GuiApp:
         self.frame = None
         self.thread = None
         self.stopEvent = None
-        self.menubar = tk.Menu(self.root)
+        self.menubar = tk.Menu()
         self.filemenu = tk.Menu(self.menubar, tearoff=0)
         self.filemenu.add_command(label="Infos")
         self.filemenu.add_command(label="Export data as text", command=self.export)
