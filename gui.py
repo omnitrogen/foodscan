@@ -119,9 +119,7 @@ class GuiApp:
         </head>
         <body>
             <style type="text/css">
-                table, td {
-                    border: 1px solid #333;
-                }
+                table, td {border}
             </style>
             <h1>Food Scan Results:</h1>
             {table}
@@ -134,8 +132,7 @@ class GuiApp:
 
         outputFile = "output" + str(int(time.time()))
         print("1", htmlPage)
-        print("2", htmlPage.format(table=table))
-        print("3", htmlPage.format(table=table).splitlines())
+        print("2", htmlPage.format(table=table, border=" border: 1px solid #333;}"))
         with open(outputFile, "w") as f:
-            for elt in htmlPage.format(table=table).splitlines():
+            for elt in htmlPage.format(table=table, border=" border: 1px solid #333;}")).splitlines():
                 f.write(elt)
