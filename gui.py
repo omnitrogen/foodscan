@@ -18,16 +18,16 @@ class GuiApp:
         self.thread = None
         self.stopEvent = None
         self.root = tk.Tk()
-        '''
-        self.menubar = tk.Menu(self.root)
-        self.root.config(menu=self.menubar)
-        self.filemenu = tk.Menu(self.menubar, tearoff=0)
-        self.filemenu.add_command(label="Infos", command=self.onClose)
-        self.filemenu.add_command(label="Export data as text", command=self.export)
-        self.filemenu.add_separator()
-        self.filemenu.add_command(label="Exit", command=self.onClose)
-        self.menubar.add_cascade(label="More", menu=self.filemenu)
-        '''
+
+        menubar = tk.Menu(self.root)
+        self.root.config(menu=menubar)
+        filemenu = tk.Menu(menubar)
+        filemenu.add_command(label="Infos", command=self.onClose)
+        filemenu.add_command(label="Export data as text", command=self.export)
+        filemenu.add_separator()
+        filemenu.add_command(label="Exit", command=self.onClose)
+        menubar.add_cascade(label="More", menu=filemenu)
+
         self.frameGlobal = tk.Frame(self.root)
         self.frameGlobal.pack()
         self.frameMenu = tk.Frame(self.frameGlobal)
@@ -44,6 +44,7 @@ class GuiApp:
         self.buttonExport.pack(pady=10)
 
         self.listeWidgets = []
+        self.listeItems = []
         self.listeProduct = []
         self.listePhoto = []
         self.activeItem = str()
@@ -106,6 +107,7 @@ class GuiApp:
             productName = resp.json()["product"]["product_name"]
             presProduct = tk.Label(self.framePresRight, text = productName)
             presProduct.pack_forget()
+            self.listeItems.append([resp.json()["product"]["brands"], resp.json()["product"]["product_name"]])
             self.listeWidgets.append([presIcon, presBrand, presProduct])
             self.listbox.delete(tk.END)
             self.listbox.insert(tk.END, str(self.listeProduct.__len__() + 1) + " " + productName)
@@ -117,4 +119,26 @@ class GuiApp:
                 self.listbox.delete(tk.END)
 
     def export(self):
-        pass
+        htmlPage = '''
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Food Scan Result</title>
+        </head>
+        <body>
+            <style type="text/css">
+                table, td {
+                    border: 1px solid #333;
+                }
+            </style>
+            <h1>Food Scan Results:</h1>
+            {table}
+        </body>
+        </html>
+        '''
+        table = ""
+        for elt in self.listeItems:
+            table += "<tbody><tr><td>" + elt[0] + "</td><td>" + elt[1] + "</td></tr></tbody>"
+
+        
