@@ -136,4 +136,4 @@ class GuiApp:
         with open(outputFile, "w") as f:
             for elt in htmlPage.format(table=table, border="{border: 1px solid #333;}").splitlines():
                 f.write(elt)
-        webbrowser.open("~/" + outputeFile, new=2)
+        webbrowser.open("~/" + outputFile, new=2)
