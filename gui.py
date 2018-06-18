@@ -31,7 +31,7 @@ class GuiApp:
         self.framePresRight.grid(row=0, column=1)
         self.listbox = tk.Listbox(self.frameMenu, width=50)
         self.listbox.pack()
-        self.buttonExport = tk.Button(self.frameMenu, text="Export", command=self.export)
+        self.buttonExport = tk.Button(self.frameMenu, text="Export to HTML", command=self.export)
         self.buttonExport.pack(pady=10)
 
         self.listeWidgets = []
@@ -136,3 +136,4 @@ class GuiApp:
         with open(outputFile, "w") as f:
             for elt in htmlPage.format(table=table, border="{border: 1px solid #333;}").splitlines():
                 f.write(elt)
+        print("[INFO] File has been created")

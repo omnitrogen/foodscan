@@ -7,6 +7,5 @@ I'll be using several Python modules, such as opencv (for the camera), pyzbar (t
 This is just for fun! (as always) :rainbow:
 
 # TODO :
-- fix pulldown menu
 - add infos
-- create export to text method
+- add images to HTML table (via export method)
