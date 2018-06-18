@@ -9,7 +9,7 @@ import cv2
 from pyzbar import pyzbar
 import requests
 from io import BytesIO
-import webbrowser
+
 
 class GuiApp:
     def __init__(self, vs):
@@ -136,4 +136,3 @@ class GuiApp:
         with open(outputFile, "w") as f:
             for elt in htmlPage.format(table=table, border="{border: 1px solid #333;}").splitlines():
                 f.write(elt)
-        webbrowser.open("~/" + outputFile, new=2)
