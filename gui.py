@@ -134,4 +134,5 @@ class GuiApp:
 
         outputFile = "output" + str(int(time.time()))
         with open(outputFile, "w") as f:
-            f.write(htmlPage.format(table=table))
+            for elt in htmlPage.format(table=table).lstrip().splitlines(): 
+                f.write(elt)
