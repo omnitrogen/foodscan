@@ -3,7 +3,7 @@ from PIL import Image
 from PIL import ImageTk
 import tkinter as tk
 import threading
-import datetime
+import time
 import imutils
 import cv2
 from pyzbar import pyzbar
@@ -18,15 +18,6 @@ class GuiApp:
         self.thread = None
         self.stopEvent = None
         self.root = tk.Tk()
-
-        menubar = tk.Menu(self.root)
-        self.root.config(menu=menubar)
-        filemenu = tk.Menu(menubar)
-        filemenu.add_command(label="Infos", command=self.onClose)
-        filemenu.add_command(label="Export data as text", command=self.export)
-        filemenu.add_separator()
-        filemenu.add_command(label="Exit", command=self.onClose)
-        menubar.add_cascade(label="More", menu=filemenu)
 
         self.frameGlobal = tk.Frame(self.root)
         self.frameGlobal.pack()
@@ -141,4 +132,6 @@ class GuiApp:
         for elt in self.listeItems:
             table += "<tbody><tr><td>" + elt[0] + "</td><td>" + elt[1] + "</td></tr></tbody>"
 
-        
+        outputFile = "output" + str(int(time.time()))
+        with open(outputFile, "w") as f:
+            f.write(htmlPage.format(table=table))
