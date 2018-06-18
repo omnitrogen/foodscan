@@ -18,7 +18,7 @@ class GuiApp:
         self.thread = None
         self.stopEvent = None
         self.root = tk.Tk()
-
+        '''
         self.menubar = tk.Menu(self.root)
         self.root.config(menu=self.menubar)
         self.filemenu = tk.Menu(self.menubar, tearoff=0)
@@ -27,7 +27,7 @@ class GuiApp:
         self.filemenu.add_separator()
         self.filemenu.add_command(label="Exit", command=self.onClose)
         self.menubar.add_cascade(label="More", menu=self.filemenu)
-
+        '''
         self.frameGlobal = tk.Frame(self.root)
         self.frameGlobal.pack()
         self.frameMenu = tk.Frame(self.frameGlobal)
@@ -40,6 +40,8 @@ class GuiApp:
         self.framePresRight.grid(row=0, column=1)
         self.listbox = tk.Listbox(self.frameMenu, width=50)
         self.listbox.pack()
+        self.buttonExport = tk.Button(self.frameMenu, command=self.export, pady=(10, 10))
+        self.buttonExport.pack()
 
         self.listeWidgets = []
         self.listeProduct = []
