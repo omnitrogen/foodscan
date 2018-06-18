@@ -122,7 +122,9 @@ class GuiApp:
                 table, td {border}
             </style>
             <h1>Food Scan Results:</h1>
-            {table}
+            <table>    
+                {table}
+            </table>
         </body>
         </html>
         '''
@@ -130,7 +132,7 @@ class GuiApp:
         for elt in self.listeItems:
             table += "<tbody><tr><td>" + elt[0] + "</td><td>" + elt[1] + "</td></tr></tbody>"
 
-        outputFile = "output" + str(int(time.time()))
+        outputFile = "output" + str(int(time.time())) + ".html"
         print("1", htmlPage)
         print("2", htmlPage.format(table=table, border="{border: 1px solid #333;}"))
         with open(outputFile, "w") as f:
