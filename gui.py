@@ -17,16 +17,16 @@ class GuiApp:
         self.frame = None
         self.thread = None
         self.stopEvent = None
-        self.menubar = tk.Menu()
+        self.root = tk.Tk()
+
+        self.menubar = tk.Menu(self.root)
         self.filemenu = tk.Menu(self.menubar, tearoff=0)
         self.filemenu.add_command(label="Infos")
         self.filemenu.add_command(label="Export data as text", command=self.export)
         self.filemenu.add_separator()
         self.filemenu.add_command(label="Exit", command=self.onClose)
         self.menubar.add_cascade(label="More", menu=self.filemenu)
-        #self.root.config(menu=self.menubar)
-
-        self.root = tk.Tk(menu=self.menubar)
+        self.root.configure(menu=self.menubar)
 
         self.frameGlobal = tk.Frame(self.root)
         self.frameGlobal.pack()
