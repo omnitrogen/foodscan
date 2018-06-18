@@ -133,6 +133,9 @@ class GuiApp:
             table += "<tbody><tr><td>" + elt[0] + "</td><td>" + elt[1] + "</td></tr></tbody>"
 
         outputFile = "output" + str(int(time.time()))
+        print("1", htmlPage)
+        print("2", htmlPage.format(table=table))
+        print("3", htmlPage.format(table=table).splitlines())
         with open(outputFile, "w") as f:
-            for elt in htmlPage.format(table=table).lstrip().splitlines(): 
+            for elt in htmlPage.format(table=table).splitlines():
                 f.write(elt)
