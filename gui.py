@@ -55,7 +55,7 @@ class GuiApp:
 
                 decode = pyzbar.decode(self.frame)
                 if decode != []:
-                    print("[INFO] Product detected")
+                    print("[INFO] Product detected: ", decode)
                     if decode[0].data.decode() not in self.listeProduct:
                         self.add_item(decode[0].data.decode())
                     else:
@@ -87,6 +87,7 @@ class GuiApp:
             listeImagesPot = ["image_small_url", "image_front_small_url", "image_url", "image_front_url"]
             self.listbox.insert(tk.END, "  Adding item...")
             resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
+            print("resp: ", resp)
             for elt in list({u for u, v in resp.json()["product"].items() if u[:5] == "image" and "small" in u})[:-1]:
                 listeImagesPot.append(elt)
             listeImagesPot = list(dict.fromkeys(listeImagesPot))
@@ -94,10 +95,15 @@ class GuiApp:
             while not stop:
                 try:
                     url = resp.json()["product"][listeImagesPot[ind]]
+                    print("url: ", url)
                     imageUrl = requests.get(url)
+                    print("imageUrl: ",imageUrl)
                     img = Image.open(BytesIO(imageUrl.content))
+                    print("img: ", img)
                     img.thumbnail((100, 100), Image.ANTIALIAS)
+                    print("img: ", img)
                     img = ImageTk.PhotoImage(img)
+                    print("img: ", img)
                     stop = True
                 except KeyError:
                     ind += 1
