@@ -92,16 +92,13 @@ class GuiApp:
             stop, ind  = False, 0
             while not stop:
                 try:
-                    print(ind, listeImagesPot[ind])
                     imageUrl = requests.get(resp.json()["product"][listeImagesPot[ind]])
                     img = Image.open(BytesIO(imageUrl.content))
                     img.thumbnail((100, 100), Image.ANTIALIAS)
                     img = ImageTk.PhotoImage(img)
-                    print("-> ", img, type(img)==ImageTk.PhotoImage)
                     stop = True
                 except KeyError:
                     ind += 1
-                    print(ind)
 
             self.listePhoto.append(img)
             presIcon = tk.Label(self.framePresLeft, image=img)
