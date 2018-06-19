@@ -88,7 +88,7 @@ class GuiApp:
             resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
             for elt in list({u for u, v in resp.json()["product"].items() if u[:5] == "image" and "small" in u})[:-1]:
                 listeImagesPot.append(elt)
-            #listeImagesPot = list(set(listeImagesPot))
+            listeImagesPot = list(dict.fromkeys(listeImagesPot))
             stop, ind  = False, 0
             while not stop:
                 try:
