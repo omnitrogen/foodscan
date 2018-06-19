@@ -84,6 +84,7 @@ class GuiApp:
 
     def add_item(self, data):
         try:
+            # {u for u, v in resp.json()["product"].items() if u[:5]=="image"}
             self.listbox.insert(tk.END, "  Adding item...")
             resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
             imageUrl = requests.get(resp.json()["product"]["image_url"])
@@ -136,4 +137,4 @@ class GuiApp:
         with open(outputFile, "w") as f:
             for elt in htmlPage.format(table=table, border="{border: 1px solid #333;}").splitlines():
                 f.write(elt)
-        print("[INFO] File has been created")
+        print("[INFO] File has been created: " + outputFile)
