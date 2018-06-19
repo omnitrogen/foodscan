@@ -57,7 +57,6 @@ class GuiApp:
                     print("[INFO] Product detected")
                     if decode[0].data.decode() not in self.listeProduct:
                         self.add_item(decode[0].data.decode())
-                        print("[INFO] Product added")
                     else:
                         print("[INFO] Product already in list.")
 
@@ -84,10 +83,11 @@ class GuiApp:
 
     def add_item(self, data):
         try:
-            # {u for u, v in resp.json()["product"].items() if u[:5]=="image"}
+            # list({u for u, v in resp.json()["product"].items() if u[:5]=="image"})
             self.listbox.insert(tk.END, "  Adding item...")
             resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
             imageUrl = requests.get(resp.json()["product"]["image_url"])
+            print("1", imageUrl)
             img = Image.open(BytesIO(imageUrl.content))
             img.thumbnail((100, 100), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
@@ -104,9 +104,11 @@ class GuiApp:
             self.listbox.delete(tk.END)
             self.listbox.insert(tk.END, str(self.listeProduct.__len__() + 1) + " " + productName)
             self.listeProduct.append(data)
+            print("[INFO] Product added")
 
         except KeyError:
             print("[INFO] Error in product detection")
+            print("[INFO] Product not added")
             if self.listbox.get(tk.END) == "  Adding item...":
                 self.listbox.delete(tk.END)
 
