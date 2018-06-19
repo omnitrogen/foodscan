@@ -88,14 +88,15 @@ class GuiApp:
             resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
             listeImagesPot.append(list({u for u, v in resp.json()["product"].items() if u[:5] == "image" and "small" in u})[:-1])
             #listeImagesPot = list(set(listeImagesPot))
-            img, ind  = None, 0
-            while type(img) != ImageTk.PhotoImage:
+            stop, ind  = False, 0
+            while not stop:
                 try:
                     imageUrl = requests.get(resp.json()["product"][listeImagesPot[ind]])
                     img = Image.open(BytesIO(imageUrl.content))
                     img.thumbnail((100, 100), Image.ANTIALIAS)
                     img = ImageTk.PhotoImage(img)
                     print("-> ", img, type(img)==ImageTk.PhotoImage)
+                    stop = True
                 except:
                     ind += 1
                     print(ind)
