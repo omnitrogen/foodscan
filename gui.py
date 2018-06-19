@@ -87,7 +87,7 @@ class GuiApp:
             self.listbox.insert(tk.END, "  Adding item...")
             resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
             listeImagesPot.append(list({u for u, v in resp.json()["product"].items() if u[:5] == "image" and "small" in u})[:-1])
-            listeImagesPot = list(set(listeImagesPot))
+            #listeImagesPot = list(set(listeImagesPot))
             img, ind  = None, 0
             while type(img) != ImageTk.PhotoImage:
                 try:
