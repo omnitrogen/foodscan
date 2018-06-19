@@ -4,6 +4,7 @@ from PIL import ImageTk
 import tkinter as tk
 import threading
 import time
+import datetime
 import imutils
 import cv2
 from pyzbar import pyzbar
@@ -92,7 +93,8 @@ class GuiApp:
             stop, ind  = False, 0
             while not stop:
                 try:
-                    imageUrl = requests.get(resp.json()["product"][listeImagesPot[ind]])
+                    url = resp.json()["product"][listeImagesPot[ind]]
+                    imageUrl = requests.get(url)
                     img = Image.open(BytesIO(imageUrl.content))
                     img.thumbnail((100, 100), Image.ANTIALIAS)
                     img = ImageTk.PhotoImage(img)
@@ -108,7 +110,7 @@ class GuiApp:
             productName = resp.json()["product"]["product_name"]
             presProduct = tk.Label(self.framePresRight, text = productName)
             presProduct.pack_forget()
-            self.listeItems.append([resp.json()["product"]["brands"], resp.json()["product"]["product_name"]])
+            self.listeItems.append([url, resp.json()["product"]["brands"], resp.json()["product"]["product_name"]])
             self.listeWidgets.append([presIcon, presBrand, presProduct])
             self.listbox.delete(tk.END)
             self.listbox.insert(tk.END, str(self.listeProduct.__len__() + 1) + " " + productName)
@@ -131,10 +133,10 @@ class GuiApp:
         </head>
         <body>
             <style type="text/css">
-                table, td {border}
+                {css}
             </style>
             <h1>Food Scan Results:</h1>
-            <table>    
+            <table>
                 {table}
             </table>
         </body>
@@ -142,10 +144,13 @@ class GuiApp:
         '''
         table = ""
         for elt in self.listeItems:
-            table += "<tbody><tr><td>" + elt[0] + "</td><td>" + elt[1] + "</td></tr></tbody>"
+            table += "<tbody><tr><td><img src='" + elt[0] + "'></td><td>" + elt[1] + "</td><td>" + elt[2] + "</td></tr></tbody>"
 
-        outputFile = "output" + str(int(time.time())) + ".html"
+        timeNow = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M")
+        outputFile = "output" + timeNow + ".html"
+        os.makedirs("scan-" + timeNow)
+        os.chdir("scan-" + timeNow)
         with open(outputFile, "w") as f:
-            for elt in htmlPage.format(table=table, border="{border: 1px solid #333;}").splitlines():
+            for elt in htmlPage.format(table=table, css="table {border-collapse: collapse;} table, th, td {border: 1px solid black;} th, td {padding: 15px; text-align: left;} tr:hover {background-color:#f5f5f5;}").splitlines():
                 f.write(elt)
         print("[INFO] File has been created: " + outputFile)
