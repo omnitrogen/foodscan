@@ -98,6 +98,7 @@ class GuiApp:
                     print("-> ", img, type(img)==ImageTk.PhotoImage)
                 except:
                     ind += 1
+                    print(ind)
 
             self.listePhoto.append(img)
             presIcon = tk.Label(self.framePresLeft, image=img)
