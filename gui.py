@@ -95,6 +95,7 @@ class GuiApp:
                     img = Image.open(BytesIO(imageUrl.content))
                     img.thumbnail((100, 100), Image.ANTIALIAS)
                     img = ImageTk.PhotoImage(img)
+                    print("-> ", img)
                 except:
                     ind += 1
 
