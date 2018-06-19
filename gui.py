@@ -83,14 +83,21 @@ class GuiApp:
 
     def add_item(self, data):
         try:
-            # list({u for u, v in resp.json()["product"].items() if u[:5]=="image"})
+            listeImagesPot = ["image_small_url", "image_front_small_url", "image_url", "image_front_url"]
             self.listbox.insert(tk.END, "  Adding item...")
             resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
-            imageUrl = requests.get(resp.json()["product"]["image_url"])
-            print("1", imageUrl)
-            img = Image.open(BytesIO(imageUrl.content))
-            img.thumbnail((100, 100), Image.ANTIALIAS)
-            img = ImageTk.PhotoImage(img)
+            listeImagesPot.append(list({u for u, v in resp.json()["product"].items() if u[:5] == "image" and "small" in u})[:-1])
+            listeImagesPot = list(set(listeImagesPot))
+            img, ind  = None, 0
+            while type(img) != ImageTk.PhotoImage:
+                try:
+                    imageUrl = requests.get(resp.json()["product"][listeImagesPot[ind]])
+                    img = Image.open(BytesIO(imageUrl.content))
+                    img.thumbnail((100, 100), Image.ANTIALIAS)
+                    img = ImageTk.PhotoImage(img)
+                except:
+                    ind += 1
+
             self.listePhoto.append(img)
             presIcon = tk.Label(self.framePresLeft, image=img)
             presIcon.pack_forget()
