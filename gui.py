@@ -55,7 +55,7 @@ class GuiApp:
 
                 decode = pyzbar.decode(self.frame)
                 if decode != []:
-                    print("[INFO] Product detected: ", decode)
+                    print("[INFO] Product detected: ", decode[0].data.decode())
                     if decode[0].data.decode() not in self.listeProduct:
                         self.add_item(decode[0].data.decode())
                     else:
@@ -90,7 +90,9 @@ class GuiApp:
             print("resp: ", resp)
             for elt in list({u for u, v in resp.json()["product"].items() if u[:5] == "image" and "small" in u})[:-1]:
                 listeImagesPot.append(elt)
+            print("listeImagesPot: ", listeImagesPot)
             listeImagesPot = list(dict.fromkeys(listeImagesPot))
+            print("listeImagesPot: ", listeImagesPot)
             stop, ind  = False, 0
             while not stop:
                 try:
