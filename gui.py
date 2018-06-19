@@ -86,7 +86,8 @@ class GuiApp:
             listeImagesPot = ["image_small_url", "image_front_small_url", "image_url", "image_front_url"]
             self.listbox.insert(tk.END, "  Adding item...")
             resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
-            listeImagesPot.append(list({u for u, v in resp.json()["product"].items() if u[:5] == "image" and "small" in u})[:-1])
+            for elt in list({u for u, v in resp.json()["product"].items() if u[:5] == "image" and "small" in u})[:-1]:
+                listeImagesPot.append(elt)
             #listeImagesPot = list(set(listeImagesPot))
             stop, ind  = False, 0
             while not stop:
