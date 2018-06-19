@@ -8,4 +8,3 @@ This is just for fun! (as always) :rainbow:
 
 # TODO :
 - add infos
-- add images to HTML table (via export method)

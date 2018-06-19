@@ -55,7 +55,7 @@ class GuiApp:
 
                 decode = pyzbar.decode(self.frame)
                 if decode != [] and decode[0].data.decode().__len__() == 13:
-                    print("[INFO] Product detected: ", decode[0].data.decode())
+                    print("[INFO] Product detected:", decode[0].data.decode())
                     if decode[0].data.decode() not in self.listeProduct:
                         self.add_item(decode[0].data.decode())
                     else:
