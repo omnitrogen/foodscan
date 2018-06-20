@@ -143,8 +143,9 @@ class GuiApp:
         </html>
         '''
         table = ""
+        ingredients = ", ".join([i["text"] for i in resp.json()["product"]["ingredients"]])
         for elt in self.listeItems:
-            table += "<tbody><tr><td><img src='" + elt[0] + "'></td><td>" + elt[1] + "</td><td>" + elt[2] + "</td></tr></tbody>"
+            table += "<tbody><tr><td><img src='" + elt[0] + "'></td><td>" + elt[1] + "</td><td>" + elt[2] + "</td><td>" + ingredients + "</td></tr></tbody>"
 
         timeNow = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M")
         outputFile = "output" + timeNow + ".html"
