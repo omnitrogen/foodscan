@@ -40,7 +40,8 @@ class GuiApp:
         self.listeProduct = []
         self.listePhoto = []
         self.activeItem = str()
-
+        self.resp = str()
+    
         self.stopEvent = threading.Event()
         self.thread = threading.Thread(target=self.videoLoop, args=())
         self.thread.start()
@@ -86,14 +87,14 @@ class GuiApp:
         try:
             listeImagesPot = ["image_small_url", "image_front_small_url", "image_url", "image_front_url"]
             self.listbox.insert(tk.END, "  Adding item...")
-            resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
-            for elt in list({u for u, v in resp.json()["product"].items() if u[:5] == "image" and "small" in u}):
+            self.resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
+            for elt in list({u for u, v in self.resp.json()["product"].items() if u[:5] == "image" and "small" in u}):
                 listeImagesPot.append(elt)
             listeImagesPot = list(dict.fromkeys(listeImagesPot))
             stop, ind  = False, 0
             while not stop:
                 try:
-                    url = resp.json()["product"][listeImagesPot[ind]]
+                    url = self.resp.json()["product"][listeImagesPot[ind]]
                     imageUrl = requests.get(url)
                     img = Image.open(BytesIO(imageUrl.content))
                     img.thumbnail((100, 100), Image.ANTIALIAS)
@@ -105,12 +106,13 @@ class GuiApp:
             self.listePhoto.append(img)
             presIcon = tk.Label(self.framePresLeft, image=img)
             presIcon.pack_forget()
-            presBrand = tk.Label(self.framePresRight, text = resp.json()["product"]["brands"])
+            brandName = self.resp.json()["product"]["brands"]
+            presBrand = tk.Label(self.framePresRight, text = brandName)
             presBrand.pack_forget()
-            productName = resp.json()["product"]["product_name"]
+            productName = self.resp.json()["product"]["product_name"]
             presProduct = tk.Label(self.framePresRight, text = productName)
             presProduct.pack_forget()
-            self.listeItems.append([url, resp.json()["product"]["brands"], resp.json()["product"]["product_name"]])
+            self.listeItems.append([url, brandName, productName)
             self.listeWidgets.append([presIcon, presBrand, presProduct])
             self.listbox.delete(tk.END)
             self.listbox.insert(tk.END, str(self.listeProduct.__len__() + 1) + " " + productName)
@@ -143,7 +145,7 @@ class GuiApp:
         </html>
         '''
         table = ""
-        ingredients = ", ".join([i["text"] for i in resp.json()["product"]["ingredients"]])
+        ingredients = ", ".join([i["text"] for i in self.resp.json()["product"]["ingredients"]])
         for elt in self.listeItems:
             table += "<tbody><tr><td><img src='" + elt[0] + "'></td><td>" + elt[1] + "</td><td>" + elt[2] + "</td><td>" + ingredients + "</td></tr></tbody>"
 
