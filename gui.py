@@ -116,7 +116,9 @@ class GuiApp:
             self.listbox.delete(tk.END)
             self.listbox.insert(tk.END, str(self.listeProduct.__len__() + 1) + " " + productName)
             self.listeProduct.append(data)
+            self.listbox.select_clear(0, self.listbox.size() - 1)
             self.listbox.select_set(self.listbox.size() - 1)
+            self.listbox.activate(self.listbox.size() - 1)
             print("[INFO] Product added")
 
         except KeyError:
