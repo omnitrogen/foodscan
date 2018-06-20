@@ -155,6 +155,6 @@ class GuiApp:
         os.makedirs("scan-" + timeNow)
         os.chdir("scan-" + timeNow)
         with open(outputFile, "w") as f:
-            for elt in htmlPage.format(table=table, css="table {border-collapse: collapse;} table, th, td {border: 1px solid black;} th, td {padding: 15px; text-align: left;} tr:hover {background-color:#f5f5f5;}").splitlines():
+            for elt in htmlPage.format(table=table, css="table {border-collapse: collapse;} table, th, td {border: 1px solid black;} th, td {padding: 15px; text-align: left;} tr:hover {background-color:#dcdde1;}").splitlines():
                 f.write(elt)
         print("[INFO] File has been created: " + outputFile)
