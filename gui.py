@@ -112,7 +112,7 @@ class GuiApp:
             productName = self.resp.json()["product"]["product_name"]
             presProduct = tk.Label(self.framePresRight, text = productName)
             presProduct.pack_forget()
-            self.listeItems.append([url, brandName, productName)
+            self.listeItems.append([url, brandName, productName])
             self.listeWidgets.append([presIcon, presBrand, presProduct])
             self.listbox.delete(tk.END)
             self.listbox.insert(tk.END, str(self.listeProduct.__len__() + 1) + " " + productName)
