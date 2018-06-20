@@ -64,9 +64,9 @@ class GuiApp:
                 activeItem = self.listbox.get(tk.ACTIVE)
                 if activeItem != str():
                     if activeItem != self.activeItem:
-                        self.listeWidgets[int(activeItem[0]) - 1][0].pack()
-                        self.listeWidgets[int(activeItem[0]) - 1][1].pack()
-                        self.listeWidgets[int(activeItem[0]) - 1][2].pack()
+                        self.listeWidgets[int(activeItem.split(" ")[0]) - 1][0].pack()
+                        self.listeWidgets[int(activeItem.split(" ")[0]) - 1][1].pack()
+                        self.listeWidgets[int(activeItem.split(" ")[0]) - 1][2].pack()
                         for elt in [i for i in self.listeWidgets if i != self.listeWidgets[int(activeItem[0]) - 1]]:
                             elt[0].pack_forget()
                             elt[1].pack_forget()
