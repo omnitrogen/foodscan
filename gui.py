@@ -10,6 +10,7 @@ import cv2
 from pyzbar import pyzbar
 import requests
 from io import BytesIO
+import unicodedata
 
 
 class GuiApp:
@@ -34,6 +35,8 @@ class GuiApp:
         self.listbox.pack()
         self.buttonExport = tk.Button(self.frameMenu, text="Export to HTML", command=self.export)
         self.buttonExport.pack(pady=10)
+
+        self.monsantoInside = ['Alvalle', 'Aunt Jemima', 'Aurora Foods', 'Banquet', "Ben & Jerry's", 'Benenuts', 'Best Foods', 'Betty Crocker', 'Bisquick', 'Bounty', 'Brossard', 'Burn', 'Cadbury', 'Campbell', 'Campbells', 'Capri Sun', 'Capri-Sun', 'Carambar', 'Carnation', 'Carte Noir', 'Chef Boyardee', 'Cherry Coke', 'Coca Cola', 'Coca-Cola', 'ConAgra', "Côte d'Or", 'Daim', 'Delicious Brand Cookies', 'Doritos', 'Dr Pepper', 'Duncan Hines', 'Famous Amos', 'Fanta', 'Findus', 'Frito Lay', 'Gamble', 'Gatorade', 'General Mills', 'Gloria', 'Green Giant', 'Géant Vert', 'Haagen Dazs', 'Healthy Choice', 'Heinz', 'Hellman', "Hershey's Nestle", 'Hollywood', 'Holsum', 'Hormel', 'Hungry Jack', 'Hunts', 'Interstate Bakeries', 'Jacquet', 'Jiffy', 'KC Masterpiece', 'Keebler/Flowers Industries', "Kellog's", 'Kelloggs', 'Kid Cuisine', 'Knorr', 'Kool-Aid', 'Kraft Philipp Morris', 'Kraft/Phillip Morris', 'Krema', 'La Vosgienne', "Lay's", 'Lean Cuisine', 'Liebig', 'Lipton', 'Lipton Ice Tea', 'Loma Linda', 'Lu', 'Malabar', 'Marie', 'Marie Callenders', 'Maxwell', 'Miko', 'Milka', 'Minute Made', 'Minute Maid', 'Morningstar', 'Ms.Butterworths', 'Nabisco', 'Nature Valley', 'Ocean Spray', 'Old el Paso', 'Ore-Ida', 'Oreo', 'Orville Redenbacher', 'Pampers', 'Pasta-Roni', 'Pepperidge Farms', 'Pepsi', 'Pepsi-Cola', 'Pepsico', 'Philadelphia', 'Pillsbury', 'Pop Secret', 'Post Cereals', 'Poulain', 'Power Bar Brand', 'Prego Pasta Sauce', 'Pringles', 'Procter', 'Procter and Gamble', 'Quaker', 'Quakers', 'Ragu Sauce', 'Rice-A-Roni', 'Royco', 'Ruffles', "Régal'ad", 'Savane', 'Schweppes', 'Seven Up', 'Smart Ones', 'Stouffers', 'Suchard', 'Sweppes', 'Tang', 'Tipiak', 'Toblerone', 'Tombstone Pizza', 'Tostitos', 'Totinos', 'Tropicana', "Uncle Ben's", 'Unilever', 'V8', 'Yoplait']
 
         self.listeWidgets = []
         self.listeItems = []
@@ -148,7 +151,10 @@ class GuiApp:
         '''
         table = ""
         for elt in self.listeItems:
-            table += "<tbody><tr><td><img src='" + elt[0] + "'></td><td>" + elt[1] + "</td><td>" + elt[2] + "</td><td>" + elt[3] + "</td></tr></tbody>"
+            if self.monsantoInside(elt[1]):
+                table += "<tbody><tr style='background-color: red'><td><img src='" + elt[0] + "'></td><td>" + elt[1] + "</td><td>" + elt[2] + "</td><td>" + elt[3] + "</td></tr></tbody>"
+            else:
+                table += "<tbody><tr><td><img src='" + elt[0] + "'></td><td>" + elt[1] + "</td><td>" + elt[2] + "</td><td>" + elt[3] + "</td></tr></tbody>"
 
         timeNow = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M")
         outputFile = "output" + timeNow + ".html"
@@ -158,3 +164,8 @@ class GuiApp:
             for elt in htmlPage.format(table=table, css="table {border-collapse: collapse;} table, th, td {border: 1px solid black;} th, td {padding: 15px; text-align: left;} tr:hover {background-color:#dcdde1;}").splitlines():
                 f.write(elt)
         print("[INFO] File has been created: " + outputFile)
+
+    def monsantoInside(self, brand):
+        if unicodedata.normalize("NFD", brand).encode('ascii', 'ignore').decode("utf-8").lower() in [i.lower() for i in self.monsantoInside]:
+            return True
+        return False
