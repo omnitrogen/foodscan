@@ -151,7 +151,7 @@ class GuiApp:
         '''
         table = ""
         for elt in self.listeItems:
-            if self.monsantoInside(elt[1]):
+            if self.monsantoInsideFunc(elt[1]):
                 table += "<tbody><tr style='background-color: red'><td><img src='" + elt[0] + "'></td><td>" + elt[1] + "</td><td>" + elt[2] + "</td><td>" + elt[3] + "</td></tr></tbody>"
             else:
                 table += "<tbody><tr><td><img src='" + elt[0] + "'></td><td>" + elt[1] + "</td><td>" + elt[2] + "</td><td>" + elt[3] + "</td></tr></tbody>"
@@ -165,7 +165,7 @@ class GuiApp:
                 f.write(elt)
         print("[INFO] File has been created: " + outputFile)
 
-    def monsantoInside(self, brand):
+    def monsantoInsideFunc(self, brand):
         if unicodedata.normalize("NFD", brand).encode('ascii', 'ignore').decode("utf-8").lower() in [i.lower() for i in self.monsantoInside]:
             return True
         return False
