@@ -152,7 +152,7 @@ class GuiApp:
         table = ""
         for elt in self.listeItems:
             if self.monsantoInsideFunc(elt[1]):
-                table += "<tbody><tr style='background-color: red'><td><img src='" + elt[0] + "'></td><td>" + elt[1] + "</td><td>" + elt[2] + "</td><td>" + elt[3] + "</td><td><img src='monsantoInside.png'></td></tr></tbody>"
+                table += "<tbody><tr style='background-color: red'><td><img src='" + elt[0] + "'></td><td>" + elt[1] + "</td><td>" + elt[2] + "</td><td>" + elt[3] + "</td><td><img src='../monsantoInside.png'></td></tr></tbody>"
             else:
                 table += "<tbody><tr><td><img src='" + elt[0] + "'></td><td>" + elt[1] + "</td><td>" + elt[2] + "</td><td>" + elt[3] + "</td><td></td></tr></tbody>"
 
