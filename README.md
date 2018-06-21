@@ -12,7 +12,7 @@ You can then export a report of all the products scanned in html format. You wil
 
 ## Installing dependencies:
 
-1) Install Zbar with yout favorite package manager:
+1) Install Zbar with your favorite package manager:
   - ```brew install zbar``` (macOS)
   - ```sudo apt-get install libzbar-dev libzbar0``` (ubuntu)
  
