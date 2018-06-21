@@ -70,7 +70,7 @@ class GuiApp:
                         self.listeWidgets[int(activeItem.split(" ")[0]) - 1][0].pack()
                         self.listeWidgets[int(activeItem.split(" ")[0]) - 1][1].pack()
                         self.listeWidgets[int(activeItem.split(" ")[0]) - 1][2].pack()
-                        for elt in [i for i in self.listeWidgets if i != self.listeWidgets[int(activeItem[0]) - 1]]:
+                        for elt in [i for i in self.listeWidgets if i != self.listeWidgets[int(activeItem.split(" ")[0]) - 1]]:
                             elt[0].pack_forget()
                             elt[1].pack_forget()
                             elt[2].pack_forget()
