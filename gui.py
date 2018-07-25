@@ -33,6 +33,16 @@ class GuiApp:
         self.framePresRight.grid(row=0, column=1)
         self.listbox = tk.Listbox(self.frameMenu, width=50)
         self.listbox.pack()
+        self.listbox.insert(tk.END, "  Put barcodes in front of the webcam to add elements...")
+        self.frameCount = tk.Frame(self.frameMenu)
+        self.frameCount.pack()
+        self.countInt = 0
+        self.countStr = tk.StringVar()
+        self.labelCountDesc = tk.Label(self.frameCount, text="Elements in the list:")
+        self.labelCountDesc.grid(row=0, column=0)
+        self.labelCount = tk.Label(self.frameCount, textvariable=self.countStr)
+        self.labelCount.grid(row=0, column=1)
+        self.countStr.set(str(self.countInt))
         self.buttonExport = tk.Button(self.frameMenu, text="Export to HTML", command=self.export)
         self.buttonExport.pack(pady=10)
 
@@ -87,6 +97,8 @@ class GuiApp:
 
     def add_item(self, data):
         try:
+            if self.countInt == 0:
+                self.listbox.delete(tk.END)
             listeImagesPot = ["image_small_url", "image_front_small_url", "image_url", "image_front_url"]
             self.listbox.insert(tk.END, "  Adding item...")
             resp = requests.get("https://fr.openfoodfacts.org/api/v0/produit/" + data + ".json")
@@ -122,6 +134,8 @@ class GuiApp:
             self.listbox.select_clear(0, self.listbox.size() - 1)
             self.listbox.select_set(self.listbox.size() - 1)
             self.listbox.activate(self.listbox.size() - 1)
+            self.countInt += 1
+            self.countStr.set(str(self.countInt))
             print("[INFO] Product added")
 
         except KeyError:
