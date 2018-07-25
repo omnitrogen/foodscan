@@ -1,16 +1,15 @@
 import os
+import unicodedata
+from io import BytesIO
+import threading
+import datetime
+import requests
+import tkinter as tk
 from PIL import Image
 from PIL import ImageTk
-import tkinter as tk
-import threading
-import time
-import datetime
 import imutils
 import cv2
 from pyzbar import pyzbar
-import requests
-from io import BytesIO
-import unicodedata
 
 
 class GuiApp:
