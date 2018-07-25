@@ -32,7 +32,6 @@ class GuiApp:
         self.framePresRight.grid(row=0, column=1)
         self.listbox = tk.Listbox(self.frameMenu, width=50)
         self.listbox.pack()
-        self.listbox.insert(tk.END, "  Put barcodes in front of the webcam to add elements...")
         self.frameCount = tk.Frame(self.frameMenu)
         self.frameCount.pack()
         self.countInt = 0
