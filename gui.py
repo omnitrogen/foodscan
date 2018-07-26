@@ -7,8 +7,6 @@ import requests
 import tkinter as tk
 from PIL import Image
 from PIL import ImageTk
-import imutils
-import cv2
 from pyzbar import pyzbar
 
 
